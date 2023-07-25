@@ -101,7 +101,7 @@ else:
         prediction = model.forward(data_in)
 
         for i in range(len(data_in)):
-            if torch.argmax(prediction) == target:
+            if torch.argmax(prediction[i]) == target[i]:
                 good += 1
 
             all += 1
