@@ -55,7 +55,7 @@ if train:
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-4)
-    epoch_n = 2
+    epoch_n = 10
 
     t0 = time.time()
     for epoch in range(1, epoch_n + 1):
@@ -71,6 +71,8 @@ if train:
 
         loss_sum += float(loss) / len(dataloader)
         print(f"mean loss: {loss_sum}")
+        stat_file = open("stats.csv", "a")
+        stat_file.write(f"{epoch},{loss_sum}")
         lte.show_time(t0, epoch / epoch_n)
 
     torch.save(obj=model, f="model.pth")
