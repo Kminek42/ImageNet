@@ -91,18 +91,16 @@ else:
     print(dev)
     print(model)
 
-    criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-4)
-    epoch_n = 10
+    good = 0
+    all = 0
+    for data_in, target in iter(dataloader):
+        data_in, target = data_in.to(dev), target.to(dev)
+        prediction = model.forward(data_in)
 
-    for epoch in range(1, epoch_n + 1):
-        for data_in, target in iter(dataloader):
-            data_in, target = data_in.to(dev), target.to(dev)
-            prediction = model.forward(data_in)
+        for i in range(len(data_in)):
+            if torch.argmax(prediction) == target:
+                good += 1
 
-            optimizer.zero_grad()
-            loss = criterion(prediction, target)
-            loss.backward()
-            optimizer.step()
-
-            print(float(loss))
+            all += 1
+    
+    print(f"Accuracy: {good / all}")
