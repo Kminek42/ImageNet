@@ -34,7 +34,7 @@ if train:
     dataloader = DataLoader(
         dataset=dataset,
         shuffle=True,
-        batch_size=16
+        batch_size=64
     )
 
     model = nn.Sequential(
