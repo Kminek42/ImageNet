@@ -12,7 +12,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 transform = torchvision.transforms.Compose([
     torchvision.transforms.ToTensor(),
-    torchvision.transforms.Resize((512, 512), antialias=True),
+    torchvision.transforms.Resize((128, 128), antialias=True),
     torchvision.transforms.Normalize(0.4456, 0.2618)])
 
 dev = torch.device("cpu")
@@ -39,10 +39,10 @@ if train:
 
     model = nn.Sequential(
         nn.Conv2d(in_channels=3, out_channels=101, kernel_size=5, padding="same"),
-        nn.MaxPool2d(kernel_size=16),
+        nn.MaxPool2d(kernel_size=8),
         nn.ReLU(),
         nn.Conv2d(in_channels=101, out_channels=101, kernel_size=5, padding="same"),
-        nn.MaxPool2d(kernel_size=8),
+        nn.MaxPool2d(kernel_size=4),
         nn.ReLU(),
         nn.Flatten(),
         nn.Linear(in_features=101 * 4 * 4, out_features=1024),
@@ -69,9 +69,9 @@ if train:
             loss.backward()
             optimizer.step()
 
-            loss_sum += float(loss) / len(dataloader)
-            print(f"mean loss: {loss_sum}")
-            lte.show_time(t0, epoch / epoch_n)
+        loss_sum += float(loss) / len(dataloader)
+        print(f"mean loss: {loss_sum}")
+        lte.show_time(t0, epoch / epoch_n)
 
 else:
     dataset = torchvision.datasets.Food101(
