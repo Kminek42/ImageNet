@@ -55,7 +55,7 @@ if train:
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-4)
-    epoch_n = 10
+    epoch_n = 2
 
     t0 = time.time()
     for epoch in range(1, epoch_n + 1):
