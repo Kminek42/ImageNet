@@ -73,6 +73,9 @@ if train:
         print(f"mean loss: {loss_sum}")
         lte.show_time(t0, epoch / epoch_n)
 
+    torch.save(obj=model, f="model.pth")
+    print("Model saved.")
+
 else:
     dataset = torchvision.datasets.Food101(
         root="datasets",
